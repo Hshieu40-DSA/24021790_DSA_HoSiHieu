@@ -11,6 +11,6 @@ int main(){
     return 0;
 }
 
-Phân tích độ phức tạp:
-- Thời gian: O(N)
-- Bộ nhớ: O(1)
+// Phân tích độ phức tạp:
+// - Thời gian: O(N)
+// - Bộ nhớ: O(1)
