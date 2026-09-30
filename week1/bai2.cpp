@@ -26,6 +26,6 @@ int main(){
     cout << endl;
     return 0;
 }
-Phân tích độ phức tạp:
-- Thời gian (Time): O(N^2)
-- Bộ nhớ (Memory): O(MAX)
+// Phân tích độ phức tạp:
+// - Thời gian (Time): O(N^2)
+// - Bộ nhớ (Memory): O(MAX)
