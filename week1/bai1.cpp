@@ -11,6 +11,6 @@ int main(){
     cout << sum << endl;
     return 0;
 }
-Phân tích độ phức tạp:
-- Thời gian(Time): O(N)
-- Bộ nhớ (Memory): O(N)
+// Phân tích độ phức tạp:
+// - Thời gian(Time): O(N)
+// - Bộ nhớ (Memory): O(N)
