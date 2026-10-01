@@ -10,7 +10,6 @@ int main(){
     cout << n <<"!= "<< giaithua << endl;
     return 0;
 }
-
 // Phân tích độ phức tạp:
 // - Thời gian: O(N)
 // - Bộ nhớ: O(1)
