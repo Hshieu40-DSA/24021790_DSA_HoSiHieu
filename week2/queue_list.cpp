@@ -31,7 +31,7 @@ public:
 
     // 4. size(): Trả về số phần tử hiện tại trong Queue
     // Độ phức tạp: O(1)
-    bool size() { 
+    int size() { 
         return data.size(); 
     }
 
