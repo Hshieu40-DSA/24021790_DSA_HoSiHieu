@@ -1,44 +1,73 @@
-// Cài đặt Queue sử dụng List
-
 #include <iostream>
 #include <vector>
 
-class QueueList {
-private:
-    std::vector<int> data; // Mảng động (List) lưu trữ các phần tử Queue
+struct List {
+    std::vector<int> data;
 
-public:
-    // 1. isEmpty(): Trả về true nếu Queue rỗng
-    // Độ phức tạp: O(1)
-    bool isEmpty() { 
-        return data.empty(); 
+    void insertTail(int val) {
+        data.push_back(val);
     }
 
-    // 2. enqueue(int item): Thêm phần tử vào cuối hàng đợi
-    // Độ phức tạp: O(1) Amortized
-    void enqueue(int item) { 
-        data.push_back(item); 
-    }
-
-    // 3. dequeue(): Xóa phần tử ở đầu hàng đợi và trả về giá trị
-    // Độ phức tạp: O(N) (do phải dịch chuyển N-1 phần tử về trước)
-    int dequeue() {
+    int deleteHead() {
         if (isEmpty()) return -1;
-        int firstItem = data.front();
-        data.erase(data.begin()); // Xóa phần tử ở vị trí 0
-        return firstItem;
+        int val = data.front();
+        data.erase(data.begin());
+        return val;
     }
 
-    // 4. size(): Trả về số phần tử hiện tại trong Queue
-    // Độ phức tạp: O(1)
-    int size() { 
-        return data.size(); 
+    bool isEmpty() {
+        return data.empty();
     }
 
-    // 5. front(): Trả về phần tử ở đầu hàng đợi
-    // Độ phức tạp: O(1)
-    int front() {
+    int getHeadData() {
         if (isEmpty()) return -1;
         return data.front();
     }
+
+    int getSize() {
+        return data.size();
+    }
 };
+
+// Cài đặt Queue bằng cách tái sử dụng List
+struct Queue {
+    List list;
+
+    // 1. isEmpty(): Trả về true nếu Queue rỗng và false nếu ngược lại - O(1)
+    bool isEmpty() {
+        return list.isEmpty();
+    }
+
+    // 2. enqueue(int item): Thêm phần tử vào cuối hàng đợi - O(1) trung bình
+    void enqueue(int data) {
+        list.insertTail(data);
+    }
+
+    // 3. dequeue(): Xóa phần tử ở đầu hàng đợi và trả về giá trị - O(N)
+    int dequeue() {
+        return list.deleteHead();
+    }
+
+    // 4. size(): Trả về số lượng phần tử hiện có trong Queue - O(1)
+    int size() {
+        return list.getSize();
+    }
+
+    // 5. front(): Trả về giá trị phần tử ở đầu hàng đợi - O(1)
+    int front() {
+        return list.getHeadData();
+    }
+};
+
+int main() {
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+
+    std::cout << "Front element: " << q.front() << std::endl; // 10
+    std::cout << "Dequeued: " << q.dequeue() << std::endl;   // 10
+    std::cout << "Front element: " << q.front() << std::endl; // 20
+    std::cout << "Queue size: " << q.size() << std::endl;     // 2
+    return 0;
+}
