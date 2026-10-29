@@ -1,69 +1,94 @@
-// Cài đặt Queue sử dụng Linked List
 #include <iostream>
 
-class QueueLinkedList {
-private:
+struct LinkedList {
     struct Node {
         int data;
         Node* next;
         Node(int val) : data(val), next(nullptr) {}
     };
 
-    Node* frontNode = nullptr; // Con trỏ quản lý phần tử ở đầu Queue
-    Node* rearNode = nullptr;  // Con trỏ quản lý phần tử ở cuối Queue
-    int count = 0;             // Lưu số lượng phần tử hiện tại
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    int size = 0;
 
-public:
-    // 1. isEmpty(): Trả về true nếu Queue rỗng và false nếu ngược lại
-    // Độ phức tạp: O(1)
-    bool isEmpty() { 
-        return frontNode == nullptr; 
-    }
-
-    // 2. enqueue(int item): Thêm phần tử vào cuối hàng đợi (Rear)
-    // Độ phức tạp: O(1)
-    void enqueue(int item) {
-        Node* newNode = new Node(item);
+    void insertTail(int data) {
+        Node* newNode = new Node(data);
         if (isEmpty()) {
-            frontNode = rearNode = newNode; // Nếu queue rỗng, cả front và rear đều trỏ vào nút mới
+            head = tail = newNode;
         } else {
-            rearNode->next = newNode;       // Nối nút mới vào sau nút rear cũ
-            rearNode = newNode;             // Cập nhật rear trỏ sang nút mới
+            tail->next = newNode;
+            tail = newNode;
         }
-        count++;
+        size++;
     }
 
-    // 3. dequeue(): Xóa và trả về phần tử ở đầu hàng đợi (Front)
-    // Độ phức tạp: O(1)
-    int dequeue() {
-        if (isEmpty()) {
-            return -1; // Trả về -1 nếu Queue rỗng
+    int deleteHead() {
+        if (isEmpty()) return -1;
+        Node* temp = head;
+        int val = temp->data;
+        head = head->next;
+        if (head == nullptr) {
+            tail = nullptr;
         }
-        Node* temp = frontNode;
-        int dequeuedValue = temp->data;
-        frontNode = frontNode->next;        // Chuyển front sang nút kế tiếp
-        
-        if (frontNode == nullptr) {
-            rearNode = nullptr;             // Nếu sau khi xóa mà Queue rỗng thì reset rear về nullptr
-        }
-        
-        delete temp;                        // Giải phóng bộ nhớ của nút vừa xóa
-        count--;
-        return dequeuedValue;
+        delete temp;
+        size--;
+        return val;
     }
 
-    // 4. size(): Trả về số lượng phần tử trong hàng đợi
-    // Độ phức tạp: O(1)
-    int size() { 
-        return count; 
+    bool isEmpty() {
+        return head == nullptr;
     }
 
-    // 5. front(): Trả về giá trị phần tử ở đầu hàng đợi mà không xóa
-    // Độ phức tạp: O(1)
-    int front() {
-        if (isEmpty()) {
-            return -1; // Trả về -1 nếu Queue rỗng
-        }
-        return frontNode->data;
+    int getHeadData() {
+        if (isEmpty()) return -1;
+        return head->data;
+    }
+
+    int getSize() {
+        return size;
     }
 };
+
+// Cài đặt Queue bằng cách tái sử dụng LinkedList
+struct Queue {
+    LinkedList list;
+
+    // 1. isEmpty(): Trả về true nếu Queue rỗng và false nếu ngược lại - O(1)
+    bool isEmpty() {
+        return list.isEmpty();
+    }
+
+    // 2. enqueue(int item): Thêm phần tử vào cuối hàng đợi (Rear) - O(1)
+    void enqueue(int data) {
+        list.insertTail(data);
+    }
+
+    // 3. dequeue(): Xóa và trả về phần tử ở đầu hàng đợi (Front) - O(1)
+    int dequeue() {
+        return list.deleteHead();
+    }
+
+    // 4. size(): Trả về số lượng phần tử trong hàng đợi - O(1)
+    int size() {
+        return list.getSize();
+    }
+
+    // 5. front(): Trả về giá trị phần tử ở đầu hàng đợi mà không xóa - O(1)
+    int front() {
+        return list.getHeadData();
+    }
+};
+
+int main() {
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+
+    std::cout << "Front element: " << q.front() << std::endl; // 10
+    std::cout << "Dequeued: " << q.dequeue() << std::endl;   // 10
+    std::cout << "Front element: " << q.front() << std::endl; // 20
+    std::cout << "Queue size: " << q.size() << std::endl;     // 2
+
+    return 0;
+}
