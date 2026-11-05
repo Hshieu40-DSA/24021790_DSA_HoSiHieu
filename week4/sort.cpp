@@ -20,7 +20,6 @@ void selectionSort(int arr[], int n){
 
 // 2.Sắp xếp nổi bọt(Bubble Sort): O(N^2)
 void bubbleSort(int arr[], int n){
-    // Giữ nguyên form khai báo biến của bạn
     for (int i=0;i<n-1;i++){
         for (int j=0;j<n-i-1;j++){
             if (arr[j]>arr[j+1]){
@@ -77,7 +76,7 @@ void Sort(int arr[], int l, int r){
 
 
 // 5.Sắp xếp nhanh(Quick Sort): O(NlogN)
-int partition(int arr[], int low, int high){ // Đưa hàm partition lên trước, thêm kiểu dữ liệu int cho hàm và biến
+int partition(int arr[], int low, int high){ 
     int pivot=arr[high];
     int i=low-1;
     for (int j=low;j<=high-1;j++){ 
@@ -93,7 +92,7 @@ int partition(int arr[], int low, int high){ // Đưa hàm partition lên trư�
 void quickSort(int arr[], int low, int high){ 
     if (low<high){
         int pivotIndex=partition(arr, low, high); 
-        // ĐƯA 2 LỆNH DƯỚI VÀO TRONG BLOCK IF: Để tránh việc đệ quy vô hạn khi low >= high
+
         quickSort(arr, low, pivotIndex-1);
         quickSort(arr, pivotIndex+1, high);
     }
